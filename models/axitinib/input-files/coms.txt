@@ -1,0 +1,8 @@
+
+# coordinate file for receptor
+grep -v ANISOU ../../data/v/kinase-resistance-mutants-master/hauser-abl-benchmark/receptors/cAbl-axitinib_nowat.pdb | awk '($1=="ATOM" && $3!~"^H" && $3!~"^[1-9]H")' > cAbl-axitinib_nowat.pdb
+
+# ligand pdb file with b-factor
+grep HETATM ~/store7/inspire/pdb/4wa9.pdb | grep "AXI B" > tmp.pdb
+paste axitinib.pdb tmp.pdb | awk -v n=`wc -l < tmp.pdb` '{if(NR<=n) printf("%60s%6.2f\n",substr($0,1,60),$(NF-1)); else print $0}' > axitinib-bfactor.pdb
+rm tmp.pdb

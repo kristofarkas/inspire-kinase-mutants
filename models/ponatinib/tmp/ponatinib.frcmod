@@ -1,0 +1,31 @@
+remark goes here
+MASS
+
+BOND
+
+ANGLE
+
+DIHE
+cg-ch-cd-na   1    0.000       180.000           2.000      same as X -c1-cd-X 
+cg-ch-cd-cc   1    0.000       180.000           2.000      same as X -c1-cd-X 
+ca-ca-cg-ch   1    0.000       180.000           2.000      same as X -c1-ca-X 
+
+IMPROPER
+ca-ca-ca-cg         1.1          180.0         2.0          Using default value
+ca-ca-ca-ha         1.1          180.0         2.0          General improper torsional angle (2 general atom types)
+ca-ca-ca-n          1.1          180.0         2.0          Using default value
+cc-cd-cd-ha         1.1          180.0         2.0          Using default value
+cc-cd-cc-ha         1.1          180.0         2.0          Using default value
+cc-h4-cc-nd         1.1          180.0         2.0          Using default value
+cd-cd-na-nd         1.1          180.0         2.0          Using default value
+cd-na-cd-nc         1.1          180.0         2.0          Using default value
+cd-h4-cc-nc         1.1          180.0         2.0          Using default value
+cc-ch-cd-na         1.1          180.0         2.0          Using default value
+c -ca-ca-ca         1.1          180.0         2.0          Using default value
+ca-n -c -o         10.5          180.0         2.0          General improper torsional angle (2 general atom types)
+c -ca-n -hn         1.1          180.0         2.0          General improper torsional angle (2 general atom types)
+
+NONBON
+
+
+

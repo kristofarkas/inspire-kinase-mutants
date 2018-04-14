@@ -1,0 +1,31 @@
+# prepare input files
+# something had been done for the coordinates of protein, ligand and water, including adding missing atoms (hydrogen and heavy atoms if they were missing in pdb), minimization (?), & re-ordering
+# all files copied from Steven's data set, except one ligand coordinate for b-factor
+#
+
+1. cystal water molecules from /net/dirac/mnt/store7/shunzhou/inspire/data/v/kinase-resistance-mutants-master/hauser-abl-benchmark/receptors/*_wat.pdb
+
+2. cp mol2 and frcmod from /net/dirac/mnt/store7/shunzhou/inspire/data/setup_files/LIG/molecules/LIG
+
+3. grep heavy atoms for wild-type protein coordinate file, with b-factor, from /net/dirac/mnt/store7/shunzhou/inspire/data/v/kinase-resistance-mutants-master/hauser-abl-benchmark/receptors/cAbl-*(_nowat).pdb using something like "awk '($1=="ATOM" && $3 !~ "^H" && $3 !~"^[1-3]H")'", rename atom names and residue numbers if necessary (for NME, for example)
+
+4. ligand coordinates, with b-factor, from original pdb /net/dirac/mnt/store7/shunzhou/inspire/pdb (grep "\<HETATM .* 1N1 B\>")
+(in case atom names being changed but the order preserved, grep ligand coordinates from build/complex.pdb, and paste bosutinib.pdb bosutinib-bfactor.pdb | awk '($1=="ATOM") {printf("%s%6.2f\n",substr($0,1,60),$NF)}' > bosutinib-rename-bfactor.pdb)
+
+5. combine 3 & 4, and re-number resid for lig
+
+6. set constraint
+
+7. other input files
+
+
+cd /net/dirac/mnt/store7/shunzhou/inspire/data/setup_files/axitinib/molecules
+for d in `ls -d cAbl_*|sed "s/cAbl_//"|tr '[:upper:]' '[:lower:]'`; do if [ ! -d ~/store7/inspire/models/axitinib/$d ]; then mkdir ~/store7/inspire/models/axitinib/$d; cd ~/store7/inspire/models/axitinib/$d; mkdir build  constraint  mineq_confs replicas  sim_confs; cd /net/dirac/mnt/store7/shunzhou/inspire/data/setup_files/axitinib/molecules; fi; done
+
+cd /net/dirac/mnt/store7/shunzhou/inspire/models/axitinib/input-files
+for f in `ls cAbl_*pdb`; do d=`echo $f | sed "s/cAbl_//;s/\.pdb//" |tr "[:upper:]" "[:lower:]"`; cd ../$d/build; sed "s/cAbl-axitinib_nowat\.pdb/$f/" ../../wt/build/complex.leap.in > complex.leap.in; cd ../../input-files; done
+
+cd ~/store7/inspire/models/axitinib
+for d in `ls -d ?? ?????`; do cd $d/build; tleap -s -f complex.leap.in > leap.log; cd ../..; done
+
+
