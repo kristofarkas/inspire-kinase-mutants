@@ -1,0 +1,4 @@
+logFile leap.log
+addPdbAtomMap{
+    {"C"  "CH3"}
+}    

@@ -1,0 +1,30 @@
+# Load parameters
+loadAmberParams ../../input-files/ponatinib.frcmod
+source leaprc.protein.ff14SB
+source leaprc.gaff2
+source leaprc.water.tip4pew
+source ../../input-files/leaprc.nme
+set default FlexibleWater on
+
+# Load molecules
+cAbl     = loadPdb ../../input-files/cAbl_e355a.pdb
+drug = loadMol2 ../../input-files/ponatinib.gaff.mol2
+water    = loadPdb ../../input-files/water.pdb
+
+# Create complex
+complex = combine { cAbl drug water }
+alignaxes complex
+
+# Check charge
+check complex
+
+# Solvate systems
+solvateBox complex TIP4PEWBOX 10.0
+addIonsRand complex Na+ 0
+addIonsRand complex Cl- 0
+
+# Save prmtop and inpcrd files
+saveAmberParm complex complex.top complex.inpcrd
+savePDB complex complex.pdb
+
+quit

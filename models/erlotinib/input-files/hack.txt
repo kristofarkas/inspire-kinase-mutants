@@ -1,0 +1,2 @@
+NME CA -> CH3
+Remove all hydrogens
